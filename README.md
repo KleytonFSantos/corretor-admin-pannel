@@ -16,7 +16,7 @@ Make the migration and create a user in the first steps
 
 ```shell
 docker compose exec app php artisan migrate
-docker compose exec app php artisan fillament:upgrade
+docker compose exec app php artisan make:filament-user
 ```
 ## Using the skeleton
 
