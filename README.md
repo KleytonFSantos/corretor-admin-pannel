@@ -2,6 +2,11 @@
 
 ## How to start
 
+Copy the .env.example in .env inside the project folder
+
+```shell
+cp .env.example .env
+```
 Start the docker compose in your pc to setting up the enviromment
 
 ```shell
@@ -10,8 +15,8 @@ docker compose up -d
 Make the migration and create a user in the first steps
 
 ```shell
-docker exec app php artisan migrate
-docker exec app php artisan fillament:upgrade
+docker compose exec app php artisan migrate
+docker compose exec app php artisan fillament:upgrade
 ```
 ## Using the skeleton
 
