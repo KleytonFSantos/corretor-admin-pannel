@@ -81,22 +81,6 @@ class Corretores extends Page implements HasForms, HasTable, HasActions
             ]);
     }
 
-//    public function form(Form $form): Form
-//    {
-//        return $form->schema([
-//            Repeater::make('members')
-//                ->schema([
-//                    Select::make('role')
-//                        ->options([
-//                            'corretor' => 'Corretor',
-//                            'administrador' => 'Administrador',
-//                        ])
-//                        ->required(),
-//                ]),
-//        ])
-//        ->columns(2);
-//    }
-
     public static function canAccess(): bool
     {
         return auth()->user()->hasRole('super_admin');
