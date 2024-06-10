@@ -1,45 +1,51 @@
 <?php
 
-namespace App\Filament\Pages\Dashboard\Corretores;
+namespace App\Filament\Pages\Corretores;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\CreateAction;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
-class CorretoresEditAction
+class CorretoresCreateActionBuilder
 {
 
-    public function handler(): EditAction
+    public function build(): CreateAction
     {
-        return EditAction::make()
+        return CreateAction::make('Adicionar')
+            ->label('Novo Corretor')
+            ->color('success')
             ->form([
                 TextInput::make('name')
-                    ->label('Nome'),
+                    ->label('Nome')
+                    ->required(),
                 TextInput::make('email')
                     ->label('Email')
                     ->email()
-                    ->unique(),
+                    ->required(),
                 TextInput::make('cpf')
                     ->label('CPF')
                     ->mask('999.999.999-99')
+                    ->required()
+                    ->autocomplete()
+                    ->autofocus()
                     ->dehydrateStateUsing(fn (string $state): string => str_replace(['.', '-'], '', $state)),
                 TextInput::make('password')
                     ->label('password')
                     ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
-                    ->dehydrated(fn (?string $state): bool => filled($state)),
-                Select::make('roles')
-                    ->options([
-                        'corretor' => 'Corretor',
-                        'super_admin' => 'Administrador',
-                    ])
+                    ->dehydrated(fn (?string $state): bool => filled($state))
+                    ->required(),
+                Select::make('roles_id')
+                    ->label('Permissão')
+                    ->options(Role::all()->pluck('name','id'))
+                    ->required(),
             ])
-            ->color('info')
             ->successNotification(function (Notification $notification): Notification {
                 return Notification::make()
                     ->success()
-                    ->title('Atualizado com sucesso!');
+                    ->title('Criado com sucesso!');
             });
     }
 }

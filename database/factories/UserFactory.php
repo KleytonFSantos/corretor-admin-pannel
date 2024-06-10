@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\RolesEnum;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -26,8 +28,9 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'cpf' => $this->generateCpf(),
+            'cpf' => $this->cpfExists('12345678911') ? $this->generateCpf() : '12345678911',
             'email_verified_at' => now(),
+            'roles_id' => RolesEnum::SUPER_ADMIN,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
@@ -50,5 +53,10 @@ class UserFactory extends Factory
             $cpf.= rand(0, 9);
         }
         return $cpf;
+    }
+
+    public function cpfExists(string $cpf): bool
+    {
+        return User::where('cpf', $cpf)->exists();
     }
 }

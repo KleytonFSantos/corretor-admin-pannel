@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages\Dashboard\Corretores;
+namespace App\Filament\Pages\Corretores;
 
 use App\Enums\RolesEnum;
 use App\Models\User;
@@ -33,7 +33,7 @@ class Corretores extends Page implements HasForms, HasTable, HasActions
         return $table
             ->query(User::query()->whereNot('roles_id', '=', RolesEnum::SUPER_ADMIN->value))
             ->headerActions([
-                (new CorretoresCreateAction())->handler()
+                (new CorretoresCreateActionBuilder())->build()
             ])
             ->columns([
                 TextColumn::make('id'),
@@ -45,14 +45,14 @@ class Corretores extends Page implements HasForms, HasTable, HasActions
 
             ])
             ->actions([
-                (new CorretoresEditAction())->handler(),
-                (new CorretoresDeleteAction())->handler(),
+                (new CorretoresEditActionBuilder())->build(),
+                (new CorretoresDeleteActionBuilder())->build(),
             ]
         );
     }
 
     public static function canAccess(): bool
     {
-        return auth()->user()->hasRole('super_admin');
+        return auth()->user()->getRoles->id === RolesEnum::SUPER_ADMIN->value;
     }
 }

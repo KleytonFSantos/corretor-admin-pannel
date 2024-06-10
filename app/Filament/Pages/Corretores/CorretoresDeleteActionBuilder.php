@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Pages\Dashboard\Corretores;
+namespace App\Filament\Pages\Corretores;
 
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\DeleteAction;
 
-class CorretoresDeleteAction
+class CorretoresDeleteActionBuilder
 {
-    public function handler()
+    public function build()
     {
         return DeleteAction::make('deletar')
             ->color('danger')

@@ -16,7 +16,7 @@ Make the migration and create a user in the first steps
 
 ```shell
 docker compose exec app php artisan migrate
-docker compose exec app php artisan make:filament-user
+docker compose exec app php artisan db:seed
 ```
 ## Using the skeleton
 
@@ -26,3 +26,10 @@ http://localhost:8000/admin
 ``
 
 And use the created user to login
+
+```
+Credentials 
+
+cpf: 12345678911
+password: password
+```
