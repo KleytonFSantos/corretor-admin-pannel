@@ -37,9 +37,10 @@ class Corretores extends Page implements HasForms, HasTable, HasActions
             ])
             ->columns([
                 TextColumn::make('id'),
-                TextColumn::make('email'),
-                TextColumn::make('name'),
-                TextColumn::make('getRoles.name'),
+                TextColumn::make('email')
+                    ->searchable(),
+                TextColumn::make('name')
+                    ->searchable(),
             ])
             ->filters([
 
